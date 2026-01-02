@@ -1,0 +1,5 @@
+DIRECT URL TO CONNECT GIT:
+
+https://dash.cloudflare.com/505afe6f8d4c43ed3e023813567d5450/pages/view/uniscrapper-frontend/settings
+
+Copy and paste this URL into your browser, or open GIT_CONNECTION_URL.md for detailed instructions.

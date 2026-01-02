@@ -1,0 +1,27 @@
+==========================================
+QUICK START - DIRECT LINKS
+==========================================
+
+1. DELETE OLD PROJECT (optional):
+   https://dash.cloudflare.com/505afe6f8d4c43ed3e023813567d5450/pages
+   → Click uniscrapper-frontend → Settings → Delete
+
+2. CREATE NEW PROJECT:
+   https://dash.cloudflare.com/505afe6f8d4c43ed3e023813567d5450/pages/new
+   → Click "Connect to Git"
+
+3. SELECT REPOSITORY:
+   rtsolutiontesting/scrapperpro
+
+4. BUILD SETTINGS:
+   Build command: npm run build
+   Output directory: dist
+   Deploy command: (LEAVE EMPTY!)
+
+5. SAVE AND DEPLOY!
+
+==========================================
+That's it! This will work correctly from the start.
+==========================================
+
+

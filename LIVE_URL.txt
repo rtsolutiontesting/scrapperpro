@@ -1,0 +1,8 @@
+Production URL: https://scrapperpro.pages.dev
+Preview URL: https://6bc25519.scrapperpro.pages.dev
+
+Backend API: https://university-data-api.rtsolutiontesting.workers.dev
+
+GitHub Repository: https://github.com/rtsolutiontesting/scrapperpro
+
+Deploy command: npm run deploy

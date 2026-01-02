@@ -1,0 +1,18 @@
+========================================
+FIRESTORE DATABASE SETUP
+========================================
+
+Direct URL:
+https://console.firebase.google.com/project/uniscrapper-pro/firestore
+
+Steps:
+1. Click the URL above
+2. Click "Create database" button
+3. Choose "Start in production mode"
+4. Select a location (e.g., us-central or closest to you)
+5. Click "Enable"
+6. Wait 2-3 minutes for database to be ready
+
+After database is created, you can deploy the backend!
+
+

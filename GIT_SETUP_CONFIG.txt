@@ -1,0 +1,30 @@
+==========================================
+EXACT CONFIGURATION VALUES FOR GIT SETUP
+==========================================
+
+When the Cloudflare dashboard opens, use these exact values:
+
+1. CLICK: "Connect to Git" button
+   (Scroll down to "Builds & deployments" section)
+
+2. SELECT REPOSITORY:
+   Repository: rtsolutiontesting/scrapperpro
+   Branch: main
+
+3. BUILD SETTINGS:
+   Production branch: main
+   Framework preset: Vite (or None)
+   Build command: npm run build
+   Build output directory: dist
+   Root directory: / (leave empty)
+
+4. ENVIRONMENT VARIABLES (Click "Add variable"):
+   Name: VITE_API_URL
+   Value: https://university-data-api.rtsolutiontesting.workers.dev
+   Environments: Production, Preview, Branch previews (select all)
+
+5. CLICK: "Save and Deploy"
+
+That's it! After this, every git push will auto-deploy.
+
+

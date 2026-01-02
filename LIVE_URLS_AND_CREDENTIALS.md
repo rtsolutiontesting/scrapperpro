@@ -65,3 +65,4 @@ Once deployed, you'll have:
 
 **No additional credentials needed** - Firebase handles authentication automatically!
 
+

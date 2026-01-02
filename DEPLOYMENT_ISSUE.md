@@ -17,3 +17,4 @@ Since the frontend is already live, we can:
 **Recommendation:**
 Let's fix this systematically. I need to update all import statements to include .js extensions.
 
+

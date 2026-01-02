@@ -35,3 +35,4 @@ echo "4. Follow the prompts"
 echo ""
 echo "After initialization, run the setup-collections script to create Firestore collections."
 
+

@@ -48,3 +48,4 @@ firebase functions:log --only api
 
 **Next Step**: Check Firebase Console to see the actual deployment status!
 
+

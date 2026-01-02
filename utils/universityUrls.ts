@@ -60,3 +60,4 @@ function getUniversityDomain(universityName: string, country: string): string | 
   return null;
 }
 
+

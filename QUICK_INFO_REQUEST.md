@@ -65,3 +65,4 @@ const firebaseConfig = {
 
 Once you provide these 3 things, I'll configure everything and we'll deploy in minutes! 🚀
 
+

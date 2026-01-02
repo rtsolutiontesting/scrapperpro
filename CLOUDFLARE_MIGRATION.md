@@ -38,3 +38,4 @@ Then update frontend API URL to point to Cloudflare Worker!
 
 **This should be much easier than Firebase Functions!** 🎉
 
+

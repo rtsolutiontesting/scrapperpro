@@ -80,3 +80,4 @@ firebase deploy --only hosting
 
 I'll create a script to automate this! Let me run the installation now.
 
+

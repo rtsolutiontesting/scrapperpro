@@ -20,8 +20,9 @@ import Layout from './components/Layout';
 import { JobDashboard } from './components/JobDashboard';
 import { DiffViewer } from './components/DiffViewer';
 import { UniversityManager } from './components/UniversityManager';
+import { getDiffResults } from './services/diffService';
 import { CANADA_UNIVERSITIES, UK_UNIVERSITIES } from './constants';
-import { FetchJob, JobStatus } from './types/core';
+import { FetchJob, JobStatus, ProgramDiff } from './types/core';
 import { jobService } from './services/jobService';
 import { getUniversityUrls } from './utils/universityUrls';
 
@@ -30,6 +31,8 @@ const App: React.FC = () => {
   const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'queue' | 'diffs' | 'stats'>('queue');
   const [queueStatus, setQueueStatus] = useState({ queueSize: 0, isProcessing: false, currentJobId: null as string | null });
+  const [diffResults, setDiffResults] = useState<ProgramDiff[]>([]);
+  const [loadingDiffs, setLoadingDiffs] = useState(false);
   
   // Get selected job
   const selectedJob = useMemo(() => {
@@ -58,6 +61,25 @@ const App: React.FC = () => {
     
     return () => clearInterval(interval);
   }, []);
+
+  // Load diff results when job is selected and DIFFS tab is active
+  useEffect(() => {
+    if (activeTab === 'diffs' && selectedJobId) {
+      setLoadingDiffs(true);
+      getDiffResults(selectedJobId)
+        .then(diffs => {
+          setDiffResults(diffs);
+          setLoadingDiffs(false);
+        })
+        .catch(error => {
+          console.error('Error loading diff results:', error);
+          setDiffResults([]);
+          setLoadingDiffs(false);
+        });
+    } else {
+      setDiffResults([]);
+    }
+  }, [activeTab, selectedJobId]);
   
   // Create a new job for a university
   const createJobForUniversity = async (universityName: string, country: string) => {
@@ -217,10 +239,17 @@ const App: React.FC = () => {
                       <p className="text-sm text-slate-500">Job ID: {selectedJob.id}</p>
                       <p className="text-sm text-slate-500">Status: {selectedJob.status}</p>
                     </div>
-                    {/* Diff viewer would go here - would need to fetch diff data from Firestore */}
-                    <div className="text-center py-8 text-slate-400">
-                      Diff viewer - fetch diff data from Firestore collection 'diff_results'
-                    </div>
+                    {loadingDiffs ? (
+                      <div className="text-center py-8 text-slate-400">
+                        Loading diff results...
+                      </div>
+                    ) : diffResults.length > 0 ? (
+                      <DiffViewer diffs={diffResults} />
+                    ) : (
+                      <div className="text-center py-8 text-slate-400">
+                        No diff results found for this job. The job may still be processing or no changes were detected.
+                      </div>
+                    )}
                   </div>
                 ) : (
                   <div className="text-center py-8 text-slate-400">

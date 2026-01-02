@@ -407,3 +407,4 @@ Set up alerts for:
 
 This architecture is designed for **long-term operation** with **daily execution** in mind. All design decisions prioritize **safety**, **reliability**, and **auditability**.
 
+

@@ -25,3 +25,4 @@ All Firebase credentials are set in the codebase:
 - Project ID: `uniscrapper-pro`
 - All configs are ready
 
+

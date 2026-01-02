@@ -25,3 +25,4 @@ console.log(`const firebaseConfig = {
 };\n`);
 console.log('Paste this config and I\'ll configure your project! 🚀\n');
 
+

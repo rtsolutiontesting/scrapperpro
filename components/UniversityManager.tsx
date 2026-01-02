@@ -55,3 +55,4 @@ export const UniversityManager: React.FC = () => {
   );
 };
 
+

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API Test - University Data Engine</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 50px auto; padding: 20px; }
+        button { padding: 10px 20px; margin: 5px; font-size: 16px; cursor: pointer; }
+        pre { background: #f5f5f5; padding: 15px; border-radius: 5px; overflow-x: auto; }
+        .success { color: green; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <h1>🧪 API Testing Tool</h1>
+    <p><strong>API URL:</strong> <code>https://university-data-api.rtsolutiontesting.workers.dev</code></p>
+    
+    <div>
+        <button onclick="testHealth()">✅ Test Health</button>
+        <button onclick="testCreateJob()">📝 Create Job</button>
+        <button onclick="testQueueStatus()">📊 Queue Status</button>
+    </div>
+    
+    <h2>Response:</h2>
+    <pre id="result">Click a button to test...</pre>
+
+    <script>
+        const API_URL = 'https://university-data-api.rtsolutiontesting.workers.dev';
+        
+        async function testHealth() {
+            try {
+                const res = await fetch(`${API_URL}/health`);
+                const data = await res.json();
+                document.getElementById('result').innerHTML = `<span class="success">✅ Success!</span>\n${JSON.stringify(data, null, 2)}`;
+            } catch (error) {
+                document.getElementById('result').innerHTML = `<span class="error">❌ Error: ${error.message}</span>`;
+            }
+        }
+        
+        async function testCreateJob() {
+            try {
+                const res = await fetch(`${API_URL}/jobs/create`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        universityName: "University of Toronto",
+                        country: "Canada",
+                        urls: ["https://www.utoronto.ca/admissions"],
+                        autoPublish: false,
+                        createdBy: "test-user"
+                    })
+                });
+                const data = await res.json();
+                document.getElementById('result').innerHTML = `<span class="success">✅ Success!</span>\n${JSON.stringify(data, null, 2)}`;
+            } catch (error) {
+                document.getElementById('result').innerHTML = `<span class="error">❌ Error: ${error.message}</span>`;
+            }
+        }
+        
+        async function testQueueStatus() {
+            try {
+                const res = await fetch(`${API_URL}/queue/status`);
+                const data = await res.json();
+                document.getElementById('result').innerHTML = `<span class="success">✅ Success!</span>\n${JSON.stringify(data, null, 2)}`;
+            } catch (error) {
+                document.getElementById('result').innerHTML = `<span class="error">❌ Error: ${error.message}</span>`;
+            }
+        }
+    </script>
+</body>
+</html>

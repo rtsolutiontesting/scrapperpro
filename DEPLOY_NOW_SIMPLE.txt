@@ -1,0 +1,27 @@
+========================================
+DEPLOY TO CLOUDFLARE PAGES - 2 MINUTES
+========================================
+
+STEP 1: Go to this link:
+https://dash.cloudflare.com/505afe6f8d4c43ed3e023813567d5450/pages
+
+STEP 2: Click "Create a project" button (top right)
+
+STEP 3: Click "Upload assets"
+
+STEP 4: 
+- Project name: uniscrapper-frontend
+- Click "Select folder" OR drag and drop
+- Navigate to: D:\RTsolution\dist
+- Select the dist folder
+
+STEP 5: Click "Deploy site"
+
+STEP 6: Wait 30 seconds, then visit:
+https://uniscrapper-frontend.pages.dev
+
+========================================
+YOUR APP WILL BE LIVE AT:
+https://uniscrapper-frontend.pages.dev
+========================================
+

@@ -1,0 +1,25 @@
+========================================
+YOUR FINAL URL (After Deployment)
+========================================
+
+Frontend URL:
+https://uniscrapper-frontend.pages.dev
+
+Backend API (Already Live):
+https://university-data-api.rtsolutiontesting.workers.dev
+
+========================================
+TO DEPLOY:
+========================================
+
+1. Go to: https://dash.cloudflare.com/
+2. Click: Workers & Pages → Pages
+3. Click: Create a project → Upload assets
+4. Project name: uniscrapper-frontend
+5. Upload folder: D:\RTsolution\dist
+6. Click: Deploy site
+
+Your app will be live in 30 seconds!
+
+========================================
+

@@ -1,0 +1,6 @@
+name = "uniscrapper-frontend"
+pages_build_output_dir = "dist"
+
+[env.production]
+name = "uniscrapper-frontend"
+

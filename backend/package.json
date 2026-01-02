@@ -1,0 +1,33 @@
+{
+  "name": "university-data-engine-backend",
+  "version": "1.0.0",
+  "description": "Production-grade university data ingestion and verification engine backend",
+  "main": "dist/functions/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "postinstall": "npm run build",
+    "start": "node functions/index.js",
+    "dev": "tsx watch functions/index.ts",
+    "deploy:functions": "firebase deploy --only functions",
+    "deploy:run": "gcloud run deploy"
+  },
+  "dependencies": {
+    "firebase-admin": "^12.0.0",
+    "firebase-functions": "^5.0.0",
+    "@google/genai": "^1.34.0",
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "typescript": "~5.8.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.0",
+    "@types/express": "^4.17.21",
+    "@types/cors": "^2.8.17",
+    "tsx": "^4.7.0"
+  },
+  "engines": {
+    "node": "20"
+  }
+}
+

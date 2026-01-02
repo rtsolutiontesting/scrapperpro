@@ -1,0 +1,13 @@
+name = "university-data-api"
+main = "src/index.ts"
+compatibility_date = "2024-12-01"
+
+[env.production]
+routes = [
+  { pattern = "api.uniscrapper.workers.dev", zone_name = "uniscrapper.workers.dev" }
+]
+
+# Environment variables (set via wrangler secret put)
+# FIREBASE_PROJECT_ID = "uniscrapper-pro"
+# FIREBASE_SERVICE_ACCOUNT_KEY = "..."
+

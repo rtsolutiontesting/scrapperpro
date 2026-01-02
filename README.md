@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # University Data Ingestion & Verification Engine
 
 **Production-grade university admission data ingestion and verification system for B2B education platforms.**

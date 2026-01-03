@@ -121,6 +121,61 @@ app.get('/queue/status', async (req: Request, res: Response) => {
   }
 });
 
+// Manually trigger job processing
+app.post('/jobs/:jobId/process', async (req: Request, res: Response) => {
+  try {
+    const { jobId } = req.params;
+    const jobDoc = await db.collection('fetch_jobs').doc(jobId).get();
+    
+    if (!jobDoc.exists) {
+      res.status(404).json({ error: 'Job not found' });
+      return;
+    }
+    
+    const jobData = { id: jobDoc.id, ...jobDoc.data() } as FetchJob;
+    
+    // Only process QUEUED jobs
+    if (jobData.status !== 'QUEUED') {
+      res.status(400).json({ error: `Job is not in QUEUED status. Current status: ${jobData.status}` });
+      return;
+    }
+    
+    // Get URLs and options from job document
+    const fullJobData = jobDoc.data() as any;
+    const urls = fullJobData.urlsToFetch || jobData.urlsFetched || [];
+    const autoPublish = fullJobData.autoPublish || false;
+    const createdBy = fullJobData.createdBy || 'system';
+    
+    if (urls.length === 0) {
+      res.status(400).json({ error: 'No URLs to fetch' });
+      return;
+    }
+    
+    logger.info('Manually triggering job processing', {
+      jobId,
+      universityName: jobData.universityName,
+      urlCount: urls.length,
+    });
+    
+    // Process job asynchronously (non-blocking)
+    jobManager.executeJob(jobData, urls, {
+      autoPublish,
+      createdBy,
+    }).catch(error => {
+      logger.error('Job processing error (manual trigger)', error, { jobId });
+    });
+    
+    res.status(200).json({ 
+      success: true, 
+      message: 'Job processing started',
+      jobId,
+    });
+  } catch (error: any) {
+    logger.error('API error: process job', error);
+    res.status(500).json({ error: error.message || 'Internal server error' });
+  }
+});
+
 // Export as Firebase Function
 export const api = onRequest({
   region: 'us-central1', // Change to your preferred region

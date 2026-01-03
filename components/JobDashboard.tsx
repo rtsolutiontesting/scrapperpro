@@ -6,6 +6,7 @@
 
 import React from 'react';
 import { FetchJob, JobStatus } from '../types/core';
+import { exportJobsToCSV } from '../services/csvExportService';
 
 interface JobDashboardProps {
   jobs: FetchJob[];
@@ -41,11 +42,27 @@ export const JobDashboard: React.FC<JobDashboardProps> = ({
     );
   };
   
+  const handleExportCSV = () => {
+    exportJobsToCSV(jobs);
+  };
+
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
         <h2 className="text-lg font-bold text-slate-800">Job Queue</h2>
-        <span className="text-sm text-slate-500">{jobs.length} jobs</span>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={handleExportCSV}
+            disabled={jobs.length === 0}
+            className="px-3 py-1.5 bg-blue-600 text-white text-sm font-semibold rounded hover:bg-blue-700 disabled:bg-slate-300 disabled:cursor-not-allowed flex items-center gap-2"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg>
+            Download CSV
+          </button>
+          <span className="text-sm text-slate-500">{jobs.length} jobs</span>
+        </div>
       </div>
       
       <div className="space-y-2">

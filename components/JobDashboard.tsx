@@ -8,6 +8,7 @@ import React from 'react';
 import { FetchJob, JobStatus } from '../types/core';
 import { exportJobsToCSV } from '../services/csvExportService';
 import { JobProgressBar } from './JobProgressBar';
+import { JobETA } from './JobETA';
 import { LiveJobPreview } from './LiveJobPreview';
 
 interface JobDashboardProps {
@@ -99,6 +100,15 @@ export const JobDashboard: React.FC<JobDashboardProps> = ({
             {/* Progress Bar */}
             <div className="mt-3 mb-2">
               <JobProgressBar status={job.status} />
+            </div>
+            
+            {/* ETA */}
+            <div className="mt-2 mb-2">
+              <JobETA 
+                status={job.status} 
+                createdAt={job.createdAt}
+                startedAt={job.startedAt}
+              />
             </div>
             
             <div className="flex justify-between items-center text-xs text-slate-500 mt-2">

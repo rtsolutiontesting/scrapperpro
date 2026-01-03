@@ -1,0 +1,16 @@
+========================================
+FIREBASE FUNCTIONS DEPLOYMENT - ETA
+========================================
+
+FIRST DEPLOYMENT: 10-15 minutes
+SUBSEQUENT DEPLOYMENTS: 5-9 minutes
+
+Breakdown:
+- Code Upload: 1-2 min
+- Cloud Build: 3-5 min  
+- Function Deployment: 1-2 min
+- Total: 5-9 min (first time: 10-15 min)
+
+Check real-time progress:
+https://console.cloud.google.com/cloud-build/builds?project=uniscrapper-pro
+

@@ -7,7 +7,7 @@
 
 import { FetchJob, JobStatus } from '../types/core';
 
-export const API_URL = import.meta.env.VITE_API_URL || 'https://university-data-api.rtsolutiontesting.workers.dev';
+export const API_URL = import.meta.env.VITE_API_URL || 'https://api-lxdtkbqefq-uc.a.run.app';
 
 const API_BASE_URL = API_URL;
 

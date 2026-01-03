@@ -1,0 +1,54 @@
+========================================
+CORRECT WAY TO FIX PERMISSIONS
+========================================
+
+❌ WRONG: Project-level IAM (what you tried)
+✅ RIGHT: Function/Cloud Run service-level permissions
+
+========================================
+OPTION 1: CLOUD RUN CONSOLE (Easiest)
+========================================
+
+Direct URL to your function:
+https://console.cloud.google.com/run/detail/us-central1/api?project=uniscrapper-pro
+
+Steps:
+1. Click the URL above
+2. Click "PERMISSIONS" tab (at the top)
+3. Click "ADD PRINCIPAL"
+4. Principal: allUsers
+5. Role: Cloud Run Invoker
+6. Click "SAVE"
+
+========================================
+OPTION 2: FIREBASE FUNCTIONS CONSOLE
+========================================
+
+1. Go to:
+https://console.firebase.google.com/project/uniscrapper-pro/functions
+
+2. Click on "api" function
+
+3. Look for "Permissions" or "Security" section
+
+4. Add allUsers with Cloud Functions Invoker role
+
+========================================
+OPTION 3: gcloud CLI
+========================================
+
+gcloud run services add-iam-policy-binding api \
+  --region=us-central1 \
+  --member="allUsers" \
+  --role="roles/run.invoker" \
+  --project=uniscrapper-pro
+
+========================================
+KEY DIFFERENCE:
+========================================
+
+❌ Project IAM = Can't add allUsers
+✅ Service/Function IAM = Can add allUsers
+
+You need SERVICE-LEVEL permissions, not PROJECT-LEVEL!
+

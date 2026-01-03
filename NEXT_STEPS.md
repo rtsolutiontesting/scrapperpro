@@ -1,43 +1,103 @@
-# 🎯 Next Steps
+# 🚀 Next Steps - What to Do Now
 
-## Current Status
+## ✅ What's Done:
+- ✅ Backend API deployed to Firebase Functions
+- ✅ API URL: `https://api-lxdtkbqefq-uc.a.run.app`
+- ✅ Frontend code updated with new API URL
 
-✅ **Function Deployed**: `api` function exists in Firebase  
-❌ **API Endpoint**: Returning 404  
-✅ **Frontend**: Working at https://uniscrapper-pro.web.app
+## 📋 Next Steps:
 
-## What to Do
+### Step 1: Test Backend API (2 minutes)
 
-### 1. Check Firebase Console (Most Important!)
+Test if your backend is working:
 
-Go to: https://console.firebase.google.com/project/uniscrapper-pro/functions/api
+1. **Open in browser:**
+   ```
+   https://api-lxdtkbqefq-uc.a.run.app/health
+   ```
 
-Check these tabs:
-- **Logs**: Look for runtime errors
-- **Trigger**: Verify the exact URL
-- **Metrics**: See if requests are reaching the function
+2. **Expected response:**
+   ```json
+   {
+     "status": "ok",
+     "timestamp": "2026-01-02T..."
+   }
+   ```
 
-### 2. Common Issues
-
-**Runtime Error:**
-- Check the Logs tab for error messages
-- Common: Missing environment variables, import errors, initialization errors
-
-**Wrong URL:**
-- The Trigger tab shows the exact URL to use
-- For v2 functions, URL format might differ
-
-**Function Not Active:**
-- Wait 2-5 minutes after deployment
-- Check the function status (should be "Active")
-
-### 3. Alternative: Check Build Logs
-
-If there was a build error:
-- Go to: https://console.cloud.google.com/cloud-build/builds
-- Find the most recent build
-- Check for compilation or build errors
+3. **If you see this, backend is working! ✅**
 
 ---
 
-**Action**: Please check the Firebase Console and share what you see in the Logs tab!
+### Step 2: Rebuild & Redeploy Frontend (5 minutes)
+
+The frontend code is updated, but needs to be rebuilt and deployed:
+
+**Option A: Git-based deployment (Cloudflare Pages - Auto)**
+
+If your frontend is connected to Git on Cloudflare Pages:
+
+```bash
+git add .
+git commit -m "Update API URL to Firebase Functions"
+git push
+```
+
+Cloudflare Pages will automatically rebuild and deploy!
+
+**Option B: Manual deployment**
+
+```bash
+# Build frontend
+npm run build
+
+# Deploy to Cloudflare Pages
+npm run deploy
+```
+
+---
+
+### Step 3: Verify Everything Works (5 minutes)
+
+After frontend is redeployed:
+
+1. **Visit your frontend:**
+   - Cloudflare Pages: Check your Cloudflare dashboard for the URL
+   - Or: `https://uniscrapper-pro.web.app` (if using Firebase Hosting)
+
+2. **Test features:**
+   - ✅ Frontend loads
+   - ✅ Job creation works
+   - ✅ Queue status shows
+   - ✅ Jobs appear in dashboard
+
+---
+
+## 🎯 Quick Test Checklist:
+
+- [ ] Backend health endpoint returns `{"status":"ok"}`
+- [ ] Frontend rebuilt with new API URL
+- [ ] Frontend redeployed
+- [ ] Frontend can create jobs
+- [ ] Frontend shows job status
+- [ ] Firestore database has data
+
+---
+
+## 🆘 If Something Doesn't Work:
+
+1. **Backend not responding?**
+   - Check Firebase Functions dashboard
+   - Check function logs in Firebase Console
+
+2. **Frontend can't connect?**
+   - Check browser console for errors
+   - Verify API URL is correct
+   - Check CORS settings (should be enabled)
+
+3. **Jobs not appearing?**
+   - Verify Firestore database is enabled
+   - Check Firestore rules allow reads/writes
+
+---
+
+**Ready? Start with Step 1 - Test the backend API!** 🚀

@@ -1,54 +1,59 @@
-# 🎉 Deployment Successful!
+# ✅ DEPLOYMENT SUCCESSFUL!
 
-## Your API is Live!
+## 🎉 Backend API is Live!
 
-**URL**: https://university-data-api.rtsolutiontesting.workers.dev
+Your Firebase Functions backend has been successfully deployed!
 
-## Available Endpoints
-
-- `GET /health` - Health check
-- `POST /jobs/create` - Create a job
-- `GET /jobs/:id` - Get job details
-- `GET /queue/status` - Queue status
-
-## Test It
-
-### Health Check:
-```bash
-curl https://university-data-api.rtsolutiontesting.workers.dev/health
+### Your API URL:
+```
+https://api-lxdtkbqefq-uc.a.run.app
 ```
 
-Or visit in browser:
-https://university-data-api.rtsolutiontesting.workers.dev/health
+### Available Endpoints:
 
-### Create Job:
-```bash
-curl -X POST https://university-data-api.rtsolutiontesting.workers.dev/jobs/create \
-  -H "Content-Type: application/json" \
-  -d '{
-    "universityName": "University of Toronto",
-    "country": "Canada",
-    "urls": ["https://www.utoronto.ca/admissions"],
-    "autoPublish": false,
-    "createdBy": "test-user"
-  }'
+1. **Health Check:**
+   ```
+   GET https://api-lxdtkbqefq-uc.a.run.app/health
+   ```
+
+2. **Create Job:**
+   ```
+   POST https://api-lxdtkbqefq-uc.a.run.app/jobs/create
+   ```
+
+3. **Get Job:**
+   ```
+   GET https://api-lxdtkbqefq-uc.a.run.app/jobs/:jobId
+   ```
+
+4. **Queue Status:**
+   ```
+   GET https://api-lxdtkbqefq-uc.a.run.app/queue/status
+   ```
+
+### ✅ What's Done:
+
+- ✅ Firebase Functions deployed successfully
+- ✅ Function name: `api`
+- ✅ Region: `us-central1`
+- ✅ Version: v2 (Cloud Run)
+- ✅ Frontend API URL updated
+
+### 🧪 Test Your API:
+
+Open this URL in your browser to test:
+```
+https://api-lxdtkbqefq-uc.a.run.app/health
 ```
 
-## Next Steps
+You should see: `{"status":"ok","timestamp":"..."}`
 
-1. ✅ API is deployed and working
-2. ⏳ Add Firebase Firestore integration (if needed)
-3. ⏳ Update frontend API URL (if needed)
-4. ⏳ Add more features as needed
+### 📝 Note:
 
-## Summary
-
-- ✅ **Backend**: Cloudflare Workers (deployed)
-- ✅ **Frontend**: Firebase Hosting (already deployed)
-- ✅ **Database**: Firebase Firestore (ready to use)
+The frontend code has been updated to use the new API URL. You may need to:
+1. Rebuild the frontend: `npm run build`
+2. Redeploy frontend (if using Cloudflare Pages, it will auto-deploy on git push)
 
 ---
 
-**Your API is live and ready to use!** 🚀
-
-
+**🎉 Your backend is now live and ready to use!**

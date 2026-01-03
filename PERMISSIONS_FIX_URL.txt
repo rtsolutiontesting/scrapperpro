@@ -1,0 +1,29 @@
+========================================
+FIX PERMISSIONS - DIRECT URLS
+========================================
+
+1. FIREBASE FUNCTIONS DASHBOARD:
+https://console.firebase.google.com/project/uniscrapper-pro/functions
+
+2. DIRECT LINK TO 'api' FUNCTION:
+https://console.firebase.google.com/project/uniscrapper-pro/functions/list?search=api
+
+STEPS:
+1. Click the URL above
+2. Click on the "api" function
+3. Go to "Permissions" tab (or "IAM" tab)
+4. Click "Add principal" or "Add member"
+5. Enter: allUsers
+6. Select role: "Cloud Functions Invoker"
+7. Click "Save"
+
+ALTERNATIVE (Cloud Console - IAM):
+https://console.cloud.google.com/functions/list?project=uniscrapper-pro
+
+Then click "api" → "Permissions" → "Add principal" → allUsers → Cloud Functions Invoker
+
+========================================
+AFTER FIX, TEST HERE:
+https://api-lxdtkbqefq-uc.a.run.app/health
+========================================
+

@@ -10,12 +10,14 @@ import { exportJobsToCSV } from '../services/csvExportService';
 import { JobProgressBar } from './JobProgressBar';
 import { JobETA } from './JobETA';
 import { LiveJobPreview } from './LiveJobPreview';
+import { JobControlPanel } from './JobControlPanel';
 
 interface JobDashboardProps {
   jobs: FetchJob[];
   onApproveJob: (jobId: string) => void;
   selectedJobId: string | null;
   onSelectJob: (jobId: string | null) => void;
+  onJobsUpdated?: () => void;
 }
 
 export const JobDashboard: React.FC<JobDashboardProps> = ({
@@ -23,6 +25,7 @@ export const JobDashboard: React.FC<JobDashboardProps> = ({
   onApproveJob,
   selectedJobId,
   onSelectJob,
+  onJobsUpdated,
 }) => {
   const getStatusBadge = (status: JobStatus) => {
     const styles: Record<JobStatus, string> = {
@@ -67,6 +70,9 @@ export const JobDashboard: React.FC<JobDashboardProps> = ({
           <span className="text-sm text-slate-500">{jobs.length} jobs</span>
         </div>
       </div>
+
+      {/* Job Control Panel */}
+      <JobControlPanel jobs={jobs} onJobsUpdated={onJobsUpdated} />
       
       {/* Live Preview Window */}
       {selectedJobId && (

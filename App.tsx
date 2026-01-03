@@ -227,6 +227,9 @@ const App: React.FC = () => {
                 onApproveJob={handleApproveJob}
                 selectedJobId={selectedJobId}
                 onSelectJob={setSelectedJobId}
+                onJobsUpdated={() => {
+                  // Jobs will update automatically via Firestore subscription
+                }}
               />
             )}
             

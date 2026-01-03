@@ -29,8 +29,9 @@ const jobQueue = new JobQueue(config, logger, jobManager);
 // Create Express app
 const app = express();
 
-// Enable CORS
+// Enable CORS and JSON body parsing
 app.use(cors({ origin: true }) as express.RequestHandler);
+app.use(express.json());
 
 // Health check
 app.get('/health', (req: Request, res: Response) => {
@@ -54,9 +55,20 @@ app.post('/jobs/create', async (req: Request, res: Response) => {
       createdBy || 'system'
     );
     
-    await jobQueue.enqueue(job, urls, {
+    // Store URLs and options in Firestore for processing
+    await db.collection('fetch_jobs').doc(job.id).update({
+      urlsToFetch: urls,
       autoPublish: autoPublish || false,
       createdBy: createdBy || 'system',
+    });
+    
+    // Process job immediately (instead of in-memory queue)
+    // This ensures jobs are processed in serverless environment
+    jobManager.executeJob(job, urls, {
+      autoPublish: autoPublish || false,
+      createdBy: createdBy || 'system',
+    }).catch(error => {
+      logger.error('Job processing error (async)', error, { jobId: job.id });
     });
     
     res.status(201).json({ job });

@@ -39,12 +39,18 @@ export const JobControlPanel: React.FC<JobControlPanelProps> = ({ jobs, onJobsUp
         }
 
         try {
-          // Trigger processing by calling the backend
-          // Since we can't directly trigger Firestore trigger, we'll use an API endpoint
-          await fetch(`${import.meta.env.VITE_API_URL || 'https://api-lxdtkbqefq-uc.a.run.app'}/jobs/${job.id}/process`, {
+          // Trigger processing by calling the backend API
+          // Encode job ID to handle special characters
+          const encodedJobId = encodeURIComponent(job.id);
+          const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://api-lxdtkbqefq-uc.a.run.app'}/jobs/${encodedJobId}/process`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
           });
+          
+          if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.error || `HTTP ${response.status}`);
+          }
         } catch (error: any) {
           console.error(`Failed to process job ${job.id}:`, error);
         }

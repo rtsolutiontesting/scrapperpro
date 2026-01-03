@@ -6,12 +6,14 @@
  */
 
 import { onRequest } from 'firebase-functions/v2/https';
+import { onDocumentCreated } from 'firebase-functions/v2/firestore';
 import { initializeApp } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
 import { getConfig, validateConfig } from '../config.js';
 import { createLogger } from '../utils/logger.js';
 import { JobManager } from '../job/job-manager.js';
 import { JobQueue } from '../job/job-queue.js';
+import { FetchJob, JobStatus } from '../types/core.js';
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 
@@ -56,19 +58,11 @@ app.post('/jobs/create', async (req: Request, res: Response) => {
     );
     
     // Store URLs and options in Firestore for processing
+    // The Firestore trigger (processJob) will process the job
     await db.collection('fetch_jobs').doc(job.id).update({
       urlsToFetch: urls,
       autoPublish: autoPublish || false,
       createdBy: createdBy || 'system',
-    });
-    
-    // Process job immediately (instead of in-memory queue)
-    // This ensures jobs are processed in serverless environment
-    jobManager.executeJob(job, urls, {
-      autoPublish: autoPublish || false,
-      createdBy: createdBy || 'system',
-    }).catch(error => {
-      logger.error('Job processing error (async)', error, { jobId: job.id });
     });
     
     res.status(201).json({ job });
@@ -134,4 +128,77 @@ export const api = onRequest({
   memory: '512MiB',
   cors: true,
 }, app);
+
+// Firestore Trigger: Process jobs when created with QUEUED status
+export const processJob = onDocumentCreated(
+  {
+    document: 'fetch_jobs/{jobId}',
+    region: 'us-central1',
+    timeoutSeconds: 540,
+    memory: '512MiB',
+  },
+  async (event) => {
+    const jobId = event.params.jobId;
+    const jobData = event.data?.data() as FetchJob | undefined;
+    
+    if (!jobData) {
+      console.error('No job data found', { jobId });
+      return;
+    }
+    
+    // Only process jobs with QUEUED status
+    if (jobData.status !== JobStatus.QUEUED) {
+      console.log('Job not in QUEUED status, skipping', { jobId, status: jobData.status });
+      return;
+    }
+    
+    // Initialize services for this function instance
+    const config = getConfig();
+    validateConfig(config);
+    const logger = createLogger(config);
+    const jobManager = new JobManager(config, logger, db);
+    
+    // Get URLs and options from job document
+    const jobDoc = await db.collection('fetch_jobs').doc(jobId).get();
+    const fullJobData = jobDoc.data() as any;
+    const urls = fullJobData.urlsToFetch || jobData.urlsFetched || [];
+    const autoPublish = fullJobData.autoPublish || false;
+    const createdBy = fullJobData.createdBy || 'system';
+    
+    if (urls.length === 0) {
+      logger.warn('No URLs to fetch', { jobId });
+      await db.collection('fetch_jobs').doc(jobId).update({
+        status: JobStatus.FAILED,
+        error: {
+          message: 'No URLs provided',
+          code: 'NO_URLS',
+          retryable: false,
+          blocked: false,
+        },
+        failedAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      });
+      return;
+    }
+    
+    logger.info('Processing job from Firestore trigger', {
+      jobId,
+      universityName: jobData.universityName,
+      urlCount: urls.length,
+    });
+    
+    try {
+      // Execute the job
+      await jobManager.executeJob(jobData, urls, {
+        autoPublish,
+        createdBy,
+      });
+      
+      logger.info('Job processing completed', { jobId });
+    } catch (error: any) {
+      logger.error('Job processing failed in trigger', error, { jobId });
+      // Error handling is done in JobManager.executeJob
+    }
+  }
+);
 

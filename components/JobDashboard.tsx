@@ -7,6 +7,8 @@
 import React from 'react';
 import { FetchJob, JobStatus } from '../types/core';
 import { exportJobsToCSV } from '../services/csvExportService';
+import { JobProgressBar } from './JobProgressBar';
+import { LiveJobPreview } from './LiveJobPreview';
 
 interface JobDashboardProps {
   jobs: FetchJob[];
@@ -65,6 +67,16 @@ export const JobDashboard: React.FC<JobDashboardProps> = ({
         </div>
       </div>
       
+      {/* Live Preview Window */}
+      {selectedJobId && (
+        <div className="mb-4">
+          <LiveJobPreview 
+            jobId={selectedJobId} 
+            job={jobs.find(j => j.id === selectedJobId) || null}
+          />
+        </div>
+      )}
+      
       <div className="space-y-2">
         {jobs.map((job) => (
           <div
@@ -82,6 +94,11 @@ export const JobDashboard: React.FC<JobDashboardProps> = ({
                 <p className="text-sm text-slate-500">{job.country}</p>
               </div>
               {getStatusBadge(job.status)}
+            </div>
+            
+            {/* Progress Bar */}
+            <div className="mt-3 mb-2">
+              <JobProgressBar status={job.status} />
             </div>
             
             <div className="flex justify-between items-center text-xs text-slate-500 mt-2">
